@@ -1,7 +1,10 @@
+
+/* Cookie Banner */
+
 function createCookieBanner() {
     const options = {
         cookieName: 'cookie-consent',
-        cookieExpireDays: 365*24*60*60, // 10 ani * 365 zile/an
+        cookieExpireDays: 3650, // Days * Years
         cookieTextHtml: `
 			<p>
 				Folosim cookies pentru a îmbunătăți experiența dvs. Continuând navigarea pe acest site, 
@@ -17,12 +20,12 @@ function createCookieBanner() {
     const cookieTextHtml = options.cookieTextHtml;
     const cookieButtonText = options.cookieButtonText;
 
-    // Verificăm dacă cookie-ul de consimțământ există
+    // Check if cookie is set
     const cookies = document.cookie.split(';');
     const cookieExists = cookies.some(cookie => cookie.trim().startsWith(cookieName + '='));
 
     if (!cookieExists) {
-        // Cream HTML-ul banner-ului de cookie
+        // Create cookie banner HTML
         const cookieWrap = document.createElement('div');
         cookieWrap.className = 'cookie-wrap';
         cookieWrap.innerHTML = `
@@ -30,24 +33,24 @@ function createCookieBanner() {
             <div class="cookie-button">${cookieButtonText}</div>
         `;
 
-        // Adăugăm HTML-ul în corpul paginii
+        // Append HTML to body
         document.body.appendChild(cookieWrap);
 
-        // Adăugăm un ascultător de evenimente de clic pentru butonul cookie
+        // Add click event listener to cookie button
         const cookieButton = cookieWrap.querySelector('.cookie-button');
         cookieButton.addEventListener('click', function () {
-            // Calculăm data de expirare a cookie-ului
+            // Calculate cookie expiration date
             const expireDate = new Date();
             expireDate.setDate(expireDate.getDate() + cookieExpireDays);
-            // Setăm cookie-ul
+            // Set cookie
             document.cookie = `${cookieName}=1; expires=${expireDate.toUTCString()}; path=/`;
-            // Ascundem banner-ul de cookie
+            // Hide cookie banner
             cookieWrap.style.display = "none";
-            // Facem refresh la pagină pentru a actualiza lista de cookie-uri
-            window.location.reload();
         });
     }
 }
 
-// Apelăm funcția când pagina este încărcată
+// Call the function when the page loads
 window.addEventListener('load', createCookieBanner);
+
+// ===========================================

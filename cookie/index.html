@@ -6,10 +6,21 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Cookie Banner</title>
 	<link rel="stylesheet" href="cookie.css">
+	<style>
+		ul,li {list-style: none; padding: 0;}
+	</style>
 </head>
 <body>
 	
 	<p><a href="#" class="delete-cookie">Delete cookie & Refresh the page</a></p>
+	<br>
+	<br>
+	<h3>Cookie-uri pe aceasta pagina:</h3>
+	<div id="show-cookie"></div>
+	<br>
+	<br>
+	<p><a href="#" class="refresh-page">Refresh the page</a></p>
+
 	
 	<script src="cookie.js"></script>
 	
@@ -35,7 +46,48 @@
 				window.location.reload(); // Actualizăm pagina
 			});
 		});
+		
+		// Refresh the page
+		document.querySelectorAll('a.refresh-page').forEach(anchor => {
+			anchor.addEventListener('click', function(event) {
+				event.preventDefault();
+				window.location.reload();
+			});
+		});
 
+	</script>
+	
+	
+	<script>
+		
+		// List all cookies
+		function displayCookies() {
+			var cookies = document.cookie.split(";");
+			var cookieList = document.getElementById("show-cookie");
+
+			// Verificăm dacă există cookie-uri
+			if (cookies.length > 0 && cookies[0] !== "") {
+				var listHTML = "<ul>";
+
+				cookies.forEach(function(cookie) {
+					var cookieParts = cookie.split("=");
+					var name = cookieParts[0].trim();
+					var value = cookieParts[1].trim();
+
+					listHTML += "<li><strong>Nume:</strong> " + name + " | <strong>Valoare:</strong> " + value + "</li>";
+				});
+
+				listHTML += "</ul>";
+				cookieList.innerHTML = listHTML;
+			} else {
+				cookieList.innerHTML = "Nici un cookie pentru acest domeniu";
+			}
+		}
+
+		// Apelăm funcția pentru afișarea cookie-urilor la încărcarea paginii
+		window.addEventListener("load", displayCookies);
+
+		
 	</script>
 </body>
 </html>
