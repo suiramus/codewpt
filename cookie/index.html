@@ -9,8 +9,33 @@
 </head>
 <body>
 	
-	
+	<p><a href="#" class="delete-cookie">Delete cookie & Refresh the page</a></p>
 	
 	<script src="cookie.js"></script>
+	
+	<script>
+		// Funcția pentru ștergerea tuturor cookie-urilor
+		// Face și refresh paginii
+		function deleteAllCookies() {
+			var cookies = document.cookie.split(";");
+
+			for (var i = 0; i < cookies.length; i++) {
+				var cookie = cookies[i].trim();
+				var eqPos = cookie.indexOf("=");
+				var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+				document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+			}
+		}
+
+		// Adăugăm event listener pentru clic pe orice ancoră cu clasa ".delete-cookie"
+		document.querySelectorAll('a.delete-cookie').forEach(anchor => {
+			anchor.addEventListener('click', function(event) {
+				event.preventDefault(); // Prevenim comportamentul implicit al clicului pe ancoră
+				deleteAllCookies(); // Ștergem toate cookie-urile
+				window.location.reload(); // Actualizăm pagina
+			});
+		});
+
+	</script>
 </body>
 </html>
