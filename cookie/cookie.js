@@ -1,7 +1,7 @@
 function createCookieBanner() {
     const options = {
         cookieName: 'cookie-consent',
-        cookieExpireDays: 365*24*60*60, // 10 ani * 365 zile/an
+        cookieExpireDays: 365*2,
         cookieTextHtml: `
 			<p>
 				Folosim cookies pentru a îmbunătăți experiența dvs. Continuând navigarea pe acest site, 
