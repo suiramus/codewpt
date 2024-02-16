@@ -12,12 +12,10 @@
 add_action('admin_init', function () {
     // Redirect any user trying to access comments page
     global $pagenow;
-    
     if ($pagenow === 'edit-comments.php' || $pagenow === 'options-discussion.php') {
         wp_redirect(admin_url());
         exit;
     }
-
     // Remove comments metabox from dashboard
     remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
 
@@ -44,8 +42,8 @@ add_action('admin_menu', function () {
 });
 
 // Remove comments links from admin bar
-function maxtheme_admin_bar_render() {
+function custom_admin_bar_remove_comments() {
     global $wp_admin_bar;
     $wp_admin_bar->remove_menu('comments');
 }
-add_action( 'wp_before_admin_bar_render', 'maxtheme_admin_bar_render' );
+add_action( 'wp_before_admin_bar_render', 'custom_admin_bar_remove_comments' );

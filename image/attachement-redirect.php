@@ -9,8 +9,10 @@ function redirect_attachment_page() {
     if ( is_attachment() ) {
         global $post;
         if ( is_a( $post, 'WP_Post' ) && ! empty( $post->post_parent ) ) {
+            // Redirect to post
             $redirect = esc_url( get_permalink( $post->post_parent ) );
         } else {
+            // Redirect to home page
             $redirect = esc_url( home_url( '/' ) );
         }
         if ( wp_safe_redirect( $redirect, 301 ) ) {

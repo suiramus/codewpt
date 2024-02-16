@@ -1,5 +1,7 @@
 <?php
 
+/* ====================================================== */
+
 /**
  * Removes original image file from disk if `-scaled` size has been created.
  * https://wp-kama.com/2284/the-scaled-suffix-for-images
@@ -9,6 +11,8 @@
  * @param string $context       Exists from WP 5.3+.
  * @return array
  */
+
+add_filter( 'wp_generate_attachment_metadata', 'remove_scaled_original_image_file', 10, 3 );
 
 function remove_scaled_original_image_file( $image_meta, $attachment_id, $context = '' ) {
 	if( $context !== 'create' || empty( $image_meta['original_image'] ) ){
@@ -27,4 +31,4 @@ function remove_scaled_original_image_file( $image_meta, $attachment_id, $contex
 	return $image_meta;
 }
 
-add_filter( 'wp_generate_attachment_metadata', 'remove_scaled_original_image_file', 10, 3 );
+/* ====================================================== */
